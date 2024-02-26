@@ -24,37 +24,36 @@
 @ECHO OFF
 setlocal enabledelayedexpansion
 :setup
-set localfiles=%appdata%\GemMiner2
+set localfiles=%%\GemMiner2
 if exist "%cd%\updater.bat" (del /Q "%cd%\updater.bat")
-if exist "%SystemDrive%\Gem Miner 2" (move /Y "%SystemDrive%\Gem Miner 2" "%SystemDrive%\GemMiner2")
-if not exist "!SystemDrive!" (md "!SystemDrive!")
+if exist "%SystemDrive%\Gem Miner 2" (move /Y "%SystemDrive%\Gem Miner 2" "%appdata%\GemMiner2")
+if not exist "%SystemDrive%" (md "%SystemDrive%")
 if not exist "!SystemDrive!\GemMiner2" (md "!SystemDrive!\GemMiner2")
-if not exist "!SystemDrive!\installing" (md "!SystemDrive!\installing")
-if not exist "!SystemDrive!\settings" (md "!SystemDrive!\installing\settings")
-if not exist "!SystemDrive!\accounts" (md "!SystemDrive!\installing\accounts")
-if not exist "!SystemDrive!\mods" (md "!SystemDrive!\installing\mods")
-if not exist "!SystemDrive!\data" (md "!SystemDrive!\installing\data")
+if not exist "%SystemDrive%\settings" (md "%SystemDrive%\settings")
+if not exist "%SystemDrive%\accounts" (md "%SystemDrive%\accounts")
+if not exist "%SystemDrive%\mods" (md "%SystemDrive%\mods")
+if not exist "%SystemDrive%\data" (md "%SystemDrive%\data")
 (
 echo set gamelocation=%cd%\%~n0.bat
-)>"!SystemDrive!\installing\settings\gamelocation.bat"
-call "!SystemDrive!\installing\settings\gamelocation.bat"
+)>"%SystemDrive%\settings\gamelocation.bat"
+call "%SystemDrive%\settings\gamelocation.bat"
 :copyright_warning
-if exist "!SystemDrive!\settings\copyrightread.txt" (goto :checkupdate)
+if exist "%SystemDrive%\settings\copyrightread.txt" (goto :checkupdate)
 if exist "%cd%\copyright.txt" (
     START "" /WAIT "%cd%\copyright.txt"
     (
     echo Copyright Read
-    )>"!SystemDrive!\installing\settings\copyrightread.txt"
+    )>"%SystemDrive%\settings\copyrightread.txt"
 )
 goto :checkupdate
 
 :: ============================================================================================================================
 
 :checkupdate
-if exist "!SystemDrive!\installing\data\Restart.bat" (
+if exist "%SystemDrive%\data\Restart.bat" (
     goto :maximize
 )
-if exist "!SystemDrive!\installing\data\updatefinished.bat" (
+if exist "%SystemDrive%\data\updatefinished.bat" (
     goto :maximize
 )
 echo Checking internet connection
@@ -70,18 +69,18 @@ echo del /Q "%cd%\license.txt"
 echo cls
 echo echo Downloading latest Gem Miner Update...
 echo echo Dont disconnect from your network^^!
-echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/LikeAWalnut/GemMine2/main/GemMiner2.bat -OutFile %SystemDrive%\GemMiner2\installing\GemMiner2.bat"
-echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/LikeAWalnut/GemMine2/main/FakeFiztyStudios.bat -OutFile %SystemDrive%\GemMiner2\installing\FakeFiztyStudios.bat"
-echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/LikeAWalnut/GemMine2/main/copyright.txt -OutFile %SystemDrive%\GemMiner2\installing\copyright.txt"
-echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/LikeAWalnut/GemMine2/main/license.txt -OutFile %SystemDrive%\GemMiner2\installing\license.txt"
-echo move /Y "%SystemDrive%\GemMiner2\installing\GemMiner2.bat" "%cd%\GemMiner2.bat"
-echo move /Y "%SystemDrive%\GemMiner2\installing\FakeFiztyStudios.bat" "%cd%\FakeFiztyStudios.bat"
-echo move /Y "%SystemDrive%\GemMiner2\installing\copyright.txt" "%cd%\copyright.txt"
-echo move /Y "%SystemDrive%\GemMiner2\installing\license.txt" "%cd%\license.txt"
+echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/FakeFizty/source/main/GemMiner2.bat -OutFile %SystemDrive%\GemMiner2\GemMiner2.bat"
+echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/FakeFizty/source/main/FakeFiztyStudios.bat -OutFile %SystemDrive%\GemMiner2\FakeFiztyStudios.bat"
+echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/FakeFizty/source/main/copyright.txt -OutFile %SystemDrive%\GemMiner2\copyright.txt"
+echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/FakeFizty/source/main/license.txt -OutFile %SystemDrive%\GemMiner2\license.txt"
+echo move /Y "%SystemDrive%\GemMiner2\GemMiner2.bat" "%cd%\GemMiner2.bat"
+echo move /Y "%SystemDrive%\GemMiner2\FakeFiztyStudios.bat" "%cd%\FakeFiztyStudios.bat"
+echo move /Y "%SystemDrive%\GemMiner2\copyright.txt" "%cd%\copyright.txt"
+echo move /Y "%SystemDrive%\GemMiner2\license.txt" "%cd%\license.txt"
 echo cls
 echo timeout /t 2 /NOBREAK ^>nul
 echo start "" "%cd%\GemMiner2.bat"
-echo echo Update Finished ^>"!SystemDrive!\installing\data\updatefinished.bat"
+echo echo Update Finished ^>"%SystemDrive%\data\updatefinished.bat"
 echo exit
 )>"%cd%\updater.bat"
 cls
@@ -115,9 +114,9 @@ goto :windowsversion
 :: FOR VIEWERS: This is the part that searches through your version of Windows. If your version if Windows 7 it will
 :: kick you automatically due to it not being able to recognize colors using ANSI.
 :windowsversion
-if exist "!SystemDrive!\installing\data\Restart.bat" (del /Q "!SystemDrive!\installing\data\Restart.bat")
-if exist "!SystemDrive!\installing\data\updatefinished.bat" (del /Q "!SystemDrive!\installing\data\updatefinished.bat")
-if exist "!SystemDrive!\installing\settings\windowsversioncheck.bat" (goto :variables)
+if exist "%SystemDrive%\data\Restart.bat" (del /Q "%SystemDrive%\data\Restart.bat")
+if exist "%SystemDrive%\data\updatefinished.bat" (del /Q "%SystemDrive%\data\updatefinished.bat")
+if exist "%SystemDrive%\settings\windowsversioncheck.bat" (goto :variables)
 cls
 echo Recieving your version of Windows...
 echo.
@@ -226,7 +225,7 @@ set color_diamondminer=%color%38;2;63;208;224m
 set color_emeraldminer=%color%38;2;0;201;71m
 set color_darkmatterminer=%color%38;2;118;64;255m
 ::Colors Disabled
-if not exist "!SystemDrive!\installing\settings\colorsdisabled.bat" (goto :FakeFiztyStudios) else (goto :colorsdisabled)
+if not exist "%SystemDrive%\settings\colorsdisabled.bat" (goto :FakeFiztyStudios) else (goto :colorsdisabled)
 
 :colorsdisabled
 ::Colors
@@ -260,14 +259,14 @@ goto :FakeFiztyStudios
 
 :FakeFiztyStudios
 cls
-if exist "!SystemDrive!\installing\data\FakeFiztyStudios.bat" if exist "%cd%\FakeFiztyStudios.bat" (
-    del /Q "!SystemDrive!\installing\data\FakeFiztyStudios.bat"
-    move /Y "%cd%\FakeFiztyStudios.bat" "!SystemDrive!\installing\data\FakeFiztyStudios.bat"
+if exist "%SystemDrive%\data\FakeFiztyStudios.bat" if exist "%cd%\FakeFiztyStudios.bat" (
+    del /Q "%SystemDrive%\data\FakeFiztyStudios.bat"
+    move /Y "%cd%\FakeFiztyStudios.bat" "%SystemDrive%\data\FakeFiztyStudios.bat"
 )
 if exist "%cd%\FakeFiztyStudios.bat" (
-    move /Y "%cd%\FakeFiztyStudios.bat" "!SystemDrive!\installing\data\FakeFiztyStudios.bat"
+    move /Y "%cd%\FakeFiztyStudios.bat" "%SystemDrive%\data\FakeFiztyStudios.bat"
 )
-if exist "!SystemDrive!\installing\data\FakeFiztyStudios.bat" (call "!SystemDrive!\installing\data\FakeFiztyStudios.bat")
+if exist "%SystemDrive%\data\FakeFiztyStudios.bat" (call "%SystemDrive%\data\FakeFiztyStudios.bat")
 goto :warning
 
 :: ============================================================================================================================
@@ -275,7 +274,7 @@ goto :warning
 :: ============================================   W   A   R   N   I   N   G   S   =============================================
 
 :warning
-if exist "!SystemDrive!\installing\settings\warningscreen.bat" (goto :errorcheck)
+if exist "%SystemDrive%\settings\warningscreen.bat" (goto :errorcheck)
 cls
 echo %color_red%==============   W A R N I N G   ==============%color_reset%
 echo.
@@ -319,9 +318,9 @@ pause
 goto :errorcheck
 
 :errorcheck
-if exist "!SystemDrive!\installing\settings\autologin.bat" (
-    call "!SystemDrive!\installing\settings\autologin.bat"
-    if not exist "!SystemDrive!\installing\accounts\!loguse!\!loguse!-account-save.bat" (del /Q "!SystemDrive!\installing\settings\autologin.bat")
+if exist "%SystemDrive%\settings\autologin.bat" (
+    call "%SystemDrive%\settings\autologin.bat"
+    if not exist "%SystemDrive%\accounts\!loguse!\!loguse!-account-save.bat" (del /Q "%SystemDrive%\settings\autologin.bat")
 )
 goto :account
 
@@ -330,8 +329,8 @@ goto :account
 :: ==============================================   A   C   C   O   U   N   T   ===============================================
 
 :account
-if exist "!SystemDrive!\installing\settings\autologin.bat" (
-    call "!SystemDrive!\installing\settings\autologin.bat"
+if exist "%SystemDrive%\settings\autologin.bat" (
+    call "%SystemDrive%\settings\autologin.bat"
     goto :gamecheck
 )
 cls
@@ -351,13 +350,13 @@ goto :account
 :loginusername
 cls
 set /p loguse="Enter your Username%color_dark_green% >> %color_reset%"
-if not exist "!SystemDrive!\installing\accounts\!loguse!\!loguse!-account-info.bat" (
+if not exist "%SystemDrive%\accounts\!loguse!\!loguse!-account-info.bat" (
     call :error_thisaccountdoesntexist
     goto :account
 )
 :loginpassword
 cls
-call "!SystemDrive!\installing\accounts\!loguse!\!loguse!-account-info.bat"
+call "%SystemDrive%\accounts\!loguse!\!loguse!-account-info.bat"
 echo Enter your Username%color_dark_green% ^>^> %color_reset%!reguse!
 set /p logpas="Enter your Password%color_dark_green% >> %color_reset%"
 if not !logpas! equ !regpas! (
@@ -382,7 +381,7 @@ pause >nul
 set /a num=0
 cls
 set /p reguse="Enter your new Username%color_dark_green% >> %color_reset%"
-if exist "!SystemDrive!\installing\accounts\!reguse!\!reguse!-account-info.bat" (
+if exist "%SystemDrive%\accounts\!reguse!\!reguse!-account-info.bat" (
     call :error_thisaccountalreadyexists
     goto :account
 )
@@ -453,11 +452,11 @@ if !confirm! equ y (goto :finishregister)
 goto :registeraccount
 
 :finishregister
-md "!SystemDrive!\installing\accounts\!reguse!\"
+md "%SystemDrive%\accounts\!reguse!\"
 (
 echo set reguse=!reguse!
 echo set regpas=!regpas!
-)>"!SystemDrive!\installing\accounts\!reguse!\!reguse!-account-info.bat"
+)>"%SystemDrive%\accounts\!reguse!\!reguse!-account-info.bat"
 cls
 echo Account created^^!
 pause
@@ -468,7 +467,7 @@ goto :account
 :: ========================================   G   A   M   E      C   H   E   C   K   ==========================================
 
 :gamecheck
-if exist "!SystemDrive!\installing\accounts\!loguse!\!loguse!-account-save.bat" (call "!SystemDrive!\installing\accounts\!loguse!\!loguse!-account-save.bat") else (goto :newgame)
+if exist "%SystemDrive%\accounts\!loguse!\!loguse!-account-save.bat" (call "%SystemDrive%\accounts\!loguse!\!loguse!-account-save.bat") else (goto :newgame)
 if not !gameversion! equ !currentgameversion! (goto :update)
 goto :gamemenu
 
@@ -523,8 +522,8 @@ echo set /a Sacrifice=0
 echo set /a SacrificeBoost=1
 echo set RebirthRoomKey=Not Owned
 echo set SacrificeRoomKey=Not Owned
-)>"!SystemDrive!\installing\accounts\!loguse!\!loguse!-account-save.bat"
-call "!SystemDrive!\installing\accounts\!loguse!\!loguse!-account-save.bat"
+)>"%SystemDrive%\accounts\!loguse!\!loguse!-account-save.bat"
+call "%SystemDrive%\accounts\!loguse!\!loguse!-account-save.bat"
 goto :gamemenu
 
 :update
@@ -574,8 +573,8 @@ echo set /a Sacrifice=!Sacrifice!
 echo set /a SacrificeBoost=!SacrificeBoost!
 echo set RebirthRoomKey=!RebirthRoomKey!
 echo set SacrificeRoomKey=!SacrificeRoomKey!
-)>"!SystemDrive!\installing\accounts\!loguse!\!loguse!-account-save.bat"
-call "!SystemDrive!\installing\accounts\!loguse!\!loguse!-account-save.bat"
+)>"%SystemDrive%\accounts\!loguse!\!loguse!-account-save.bat"
+call "%SystemDrive%\accounts\!loguse!\!loguse!-account-save.bat"
 goto :gamemenu
 
 :: ============================================================================================================================
@@ -591,7 +590,7 @@ if !PlaySeconds! equ 0 (
     call :AutoSaveModule
 )
 cls
-echo %color_gems%═════════════╣   M I N I N G   ╠═════════════%color_reset%
+echo %color_gems%â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•£   M I N I N G   â• â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�%color_reset%
 echo.
 echo %color_green%^>%color_reset% You're %color_green%Logged in%color_reset% as %color_green%[!loguse!]%color_reset%^^!
 echo.
@@ -607,18 +606,18 @@ echo Dark Matter Gem Miner = !DarkMatterMinerStatus!
 echo.
 echo %color_gems%^>%color_reset% Total %color_gems%Profit%color_reset%: !profit!%color_gems%$%color_reset%/s
 echo.
-echo ┌─────────────────────────────────────────┐
-echo │-Options-                                │
-echo │[S] Shop                                 │
-echo │%color_gray%[R] Rebirth (Comming Soon)%color_reset%               │
-echo │%color_gray%[V] Sacrifice (Comming Soon)%color_reset%             │
-echo │[W] Settings                             │
-echo │%color_gray%[E] Stats (Comming Soon)%color_reset%                 │
-echo │%color_gray%[T] Achievements (Comming Soon)%color_reset%          │
-echo │%color_gray%[U] Updates Note (Comming Soon)%color_reset%          │
-echo │[A] Save                                 │
-echo │[Q] Save and Exit                        │
-echo └─────────────────────────────────────────┘
+echo â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”�
+echo â”‚-Options-                                â”‚
+echo â”‚[S] Shop                                 â”‚
+echo â”‚%color_gray%[R] Rebirth (Comming Soon)%color_reset%               â”‚
+echo â”‚%color_gray%[V] Sacrifice (Comming Soon)%color_reset%             â”‚
+echo â”‚[W] Settings                             â”‚
+echo â”‚%color_gray%[E] Stats (Comming Soon)%color_reset%                 â”‚
+echo â”‚%color_gray%[T] Achievements (Comming Soon)%color_reset%          â”‚
+echo â”‚%color_gray%[U] Updates Note (Comming Soon)%color_reset%          â”‚
+echo â”‚[A] Save                                 â”‚
+echo â”‚[Q] Save and Exit                        â”‚
+echo â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 echo.
 echo %color_dark_gray%www.github.com/fakefizty%color_reset%
 echo.
@@ -665,7 +664,7 @@ if %errorlevel% equ 1 (
 
 :shop
 cls
-echo %color_aqua%═══════════════╣   S H O P   ╠═══════════════%color_reset%
+echo %color_aqua%â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•£   S H O P   â• â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�%color_reset%
 echo.
 echo [1] %color_aqua%Miner%color_reset% Shop
 echo [2] %color_aqua%Item%color_reset% Shop
@@ -681,7 +680,7 @@ goto :shop
 
 :itemshop
 cls
-echo %color_gems%═══════════╣   I T E M   S H O P   ╠═══════════%color_reset%
+echo %color_gems%â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•£   I T E M   S H O P   â• â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�%color_reset%
 echo.
 echo %color_gems%^>%color_reset% Your %color_gems%Gems%color_reset%: !Gems!%color_gems%$%color_reset%
 echo.
@@ -699,7 +698,7 @@ goto :itemshop
 :minershop
 call :MinerShopMaxDisplay
 cls
-echo %color_gems%══════════╣   M I N E R   S H O P   ╠══════════%color_reset%
+echo %color_gems%â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•£   M I N E R   S H O P   â• â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�%color_reset%
 echo.
 echo %color_gems%^>%color_reset% Your %color_gems%Gems%color_reset%: !Gems!%color_gems%$%color_reset%
 echo.
@@ -738,7 +737,7 @@ if !shopmenu! EQU 5 (goto :DiamondMinerBuyConditions)
 if !shopmenu! EQU 6 (goto :EmeraldMinerBuyConditions)
 if !shopmenu! EQU 7 (goto :DarkMatterMinerBuyConditions)
 if !shopmenu! EQU 9 (
-    if not exist "!SystemDrive!\installing\settings\automax.bat" (
+    if not exist "%SystemDrive%\settings\automax.bat" (
         call :error_requireautomax
         goto :minershop
     )
@@ -839,7 +838,7 @@ goto :basicminerbuy
 :basicminerbuy
 set temporarytype=Basic
 call :temporarybuysetup
-if exist "!SystemDrive!\installing\settings\automax.bat" (
+if exist "%SystemDrive%\settings\automax.bat" (
     goto :basicminerbuymax
 )
 cls
@@ -975,7 +974,7 @@ goto :silverminerbuy
 :silverminerbuy
 set temporarytype=Silver
 call :temporarybuysetup
-if exist "!SystemDrive!\installing\settings\automax.bat" (
+if exist "%SystemDrive%\settings\automax.bat" (
     goto :silverminerbuymax
 )
 cls
@@ -1111,7 +1110,7 @@ goto :ironminerbuy
 :ironminerbuy
 set temporarytype=Iron
 call :temporarybuysetup
-if exist "!SystemDrive!\installing\settings\automax.bat" (
+if exist "%SystemDrive%\settings\automax.bat" (
     goto :ironminerbuymax
 )
 cls
@@ -1247,7 +1246,7 @@ goto :goldminerbuy
 :goldminerbuy
 set temporarytype=Gold
 call :temporarybuysetup
-if exist "!SystemDrive!\installing\settings\automax.bat" (
+if exist "%SystemDrive%\settings\automax.bat" (
     goto :goldminerbuymax
 )
 cls
@@ -1383,7 +1382,7 @@ goto :diamondminerbuy
 :diamondminerbuy
 set temporarytype=Diamond
 call :temporarybuysetup
-if exist "!SystemDrive!\installing\settings\automax.bat" (
+if exist "%SystemDrive%\settings\automax.bat" (
     goto :diamondminerbuymax
 )
 cls
@@ -1519,7 +1518,7 @@ goto :emeraldminerbuy
 :emeraldminerbuy
 set temporarytype=Emerald
 call :temporarybuysetup
-if exist "!SystemDrive!\installing\settings\automax.bat" (
+if exist "%SystemDrive%\settings\automax.bat" (
     goto :emeraldminerbuymax
 )
 cls
@@ -1655,7 +1654,7 @@ goto :darkmatterminerbuy
 :darkmatterminerbuy
 set temporarytype=DarkMatter
 call :temporarybuysetup
-if exist "!SystemDrive!\installing\settings\automax.bat" (
+if exist "%SystemDrive%\settings\automax.bat" (
     goto :darkmatterminerbuymax
 )
 cls
@@ -1779,7 +1778,7 @@ goto :minershop
 :settings
 call :SettingsDisplay
 cls
-echo %color_green%═══════════╣   S E T T I N G S   ╠═══════════%color_reset%
+echo %color_green%â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•£   S E T T I N G S   â• â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�%color_reset%
 echo.
 echo -Features-
 echo [1] !AutoLoginDisplay! = Auto Login %color_gray%(Automatically logs you in your account.)%color_reset%
@@ -1814,22 +1813,22 @@ goto :settings
 
 :settings_warningscreen
 cls
-if exist "!SystemDrive!\installing\settings\warningscreen.bat" (
-    del /Q "!SystemDrive!\installing\settings\warningscreen.bat"
+if exist "%SystemDrive%\settings\warningscreen.bat" (
+    del /Q "%SystemDrive%\settings\warningscreen.bat"
     echo Restart Required
     (
     echo Restart
-    )>"!SystemDrive!\installing\data\Restart.bat"
+    )>"%SystemDrive%\data\Restart.bat"
     pause
     goto :Launcher
 ) else (
     (
     echo Warning Screen
-    )>"!SystemDrive!\installing\settings\warningscreen.bat"
+    )>"%SystemDrive%\settings\warningscreen.bat"
     echo Restart Required
     (
     echo Restart
-    )>"!SystemDrive!\installing\data\Restart.bat"
+    )>"%SystemDrive%\data\Restart.bat"
     pause
     goto :Launcher
 )
@@ -1838,12 +1837,12 @@ if exist "!SystemDrive!\installing\settings\warningscreen.bat" (
 
 :settings_autologin
 cls
-if exist "!SystemDrive!\installing\settings\autologin.bat" (
-    del /Q "!SystemDrive!\installing\settings\autologin.bat"
+if exist "%SystemDrive%\settings\autologin.bat" (
+    del /Q "%SystemDrive%\settings\autologin.bat"
     echo Restart Required
     (
     echo Restart
-    )>"!SystemDrive!\installing\data\Restart.bat"
+    )>"%SystemDrive%\data\Restart.bat"
     pause
     goto :Launcher
 ) else (
@@ -1852,11 +1851,11 @@ if exist "!SystemDrive!\installing\settings\autologin.bat" (
     echo set logpas=!logpas!
     echo set reguse=!loguse!
     echo set regpas=!logpas!
-    )>"!SystemDrive!\installing\settings\autologin.bat"
+    )>"%SystemDrive%\settings\autologin.bat"
     echo Restart Required
     (
     echo Restart
-    )>"!SystemDrive!\installing\data\Restart.bat"
+    )>"%SystemDrive%\data\Restart.bat"
     pause
     goto :Launcher
 )
@@ -1865,33 +1864,33 @@ if exist "!SystemDrive!\installing\settings\autologin.bat" (
 
 :settings_autosave
 cls
-if exist "!SystemDrive!\installing\settings\autosave.bat" (
-    del /Q "!SystemDrive!\installing\settings\autosave.bat"
+if exist "%SystemDrive%\settings\autosave.bat" (
+    del /Q "%SystemDrive%\settings\autosave.bat"
     goto :settings
 )
 (
 echo Auto Save
-)>"!SystemDrive!\installing\settings\autosave.bat"
+)>"%SystemDrive%\settings\autosave.bat"
 goto :settings
 
 :: ============================================================================================================================
 
 :settings_automax
 cls
-if exist "!SystemDrive!\installing\settings\automax.bat" (
-    del /Q "!SystemDrive!\installing\settings\automax.bat"
+if exist "%SystemDrive%\settings\automax.bat" (
+    del /Q "%SystemDrive%\settings\automax.bat"
     goto :settings
 )
 (
 echo Auto MAX
-)>"!SystemDrive!\installing\settings\automax.bat"
+)>"%SystemDrive%\settings\automax.bat"
 goto :settings
 
 :: ============================================================================================================================
 
 :settings_credits
 cls
-echo %color_gems%═════╣   C R E D I T S   A N D   A B O U T   ╠═════%color_reset%
+echo %color_gems%â•�â•�â•�â•�â•�â•£   C R E D I T S   A N D   A B O U T   â• â•�â•�â•�â•�â•�%color_reset%
 echo.
 echo -About-
 echo Hey^^! This is my first %color_light_gray%"Proper"%color_reset% game from Batch. I wanted to 
@@ -1927,7 +1926,7 @@ goto :settings
 
 :settings_adminconsole
 cls
-echo %color_red%════════════╣   C O N S O L E   ╠════════════%color_reset%
+echo %color_red%â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•£   C O N S O L E   â• â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�%color_reset%
 echo.
 set /p input="Enter valid console password: "
 if not %input% equ 1938290 (
@@ -1935,7 +1934,7 @@ if not %input% equ 1938290 (
     goto :settings
 )
 cls
-echo %color_red%════════════╣   C O N S O L E   ╠════════════%color_reset%
+echo %color_red%â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•£   C O N S O L E   â• â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�%color_reset%
 echo Welcome to the Admin Console^^!
 echo Type %color_red%"back"%color_reset% to return
 echo.
@@ -1949,16 +1948,16 @@ goto :settings_console
 
 :settings_windowsversioncheck
 cls
-if exist "!SystemDrive!\installing\settings\windowsversioncheck.bat" (
-    del /Q "!SystemDrive!\installing\settings\windowsversioncheck.bat"
+if exist "%SystemDrive%\settings\windowsversioncheck.bat" (
+    del /Q "%SystemDrive%\settings\windowsversioncheck.bat"
     echo Restart Required
     (
     echo Restart
-    )>"!SystemDrive!\installing\data\Restart.bat"
+    )>"%SystemDrive%\data\Restart.bat"
     pause
     goto :Launcher
 )
-echo %color_red%════════════╣   W A R N I N G   ╠════════════%color_reset%
+echo %color_red%â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•£   W A R N I N G   â• â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�%color_reset%
 echo.
 echo Disabling the Windows Version Check may
 echo %color_red%Cause Problems%color_reset%. The windows version check
@@ -1971,7 +1970,7 @@ echo %color_red%sure%color_reset% you are running %color_red%Windows 10 or later
 echo.
 echo Please wait 30 seconds before Confirming...
 echo.
-echo %color_red%═════════════════════════════════════════════%color_reset%
+echo %color_red%â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�â•�%color_reset%
 timeout /t 30 /nobreak >nul
 cls
 set /p input="Confirm? [y/n]>> "
@@ -1984,12 +1983,12 @@ goto :settings_windowsversioncheck
 :settings_windowsversioncheck2
 (
 echo Windows Check
-)>"!SystemDrive!\installing\settings\windowsversioncheck.bat"
+)>"%SystemDrive%\settings\windowsversioncheck.bat"
 cls
 echo Restart Required
 (
 echo Restart
-)>"!SystemDrive!\installing\data\Restart.bat"
+)>"%SystemDrive%\data\Restart.bat"
 pause
 goto :Launcher
 
@@ -1997,22 +1996,22 @@ goto :Launcher
 
 :settings_colors
 cls
-if exist "!SystemDrive!\installing\settings\colorsdisabled.bat" (
-    del /Q "!SystemDrive!\installing\settings\colorsdisabled.bat"
+if exist "%SystemDrive%\settings\colorsdisabled.bat" (
+    del /Q "%SystemDrive%\settings\colorsdisabled.bat"
     echo Restart Required
     (
     echo Restart
-    )>"!SystemDrive!\installing\data\Restart.bat"
+    )>"%SystemDrive%\data\Restart.bat"
     pause
     goto :Launcher
 )
 (
 echo Colors
-)>"!SystemDrive!\installing\settings\colorsdisabled.bat"
+)>"%SystemDrive%\settings\colorsdisabled.bat"
 echo Restart Required
 (
 echo Restart
-)>"!SystemDrive!\installing\data\Restart.bat"
+)>"%SystemDrive%\data\Restart.bat"
 pause
 goto :Launcher
 
@@ -2033,13 +2032,13 @@ goto :eof
 
 
 :SettingsDisplay
-if exist "!SystemDrive!\installing\settings\autologin.bat" (set AutoLoginDisplay=%color_green%√ ENABLED %color_reset%) else (set AutoLoginDisplay=%color_red%X DISABLED%color_reset%)
-if exist "!SystemDrive!\installing\settings\autosave.bat" (set AutoSaveDisplay=%color_green%√ ENABLED %color_reset%) else (set AutoSaveDisplay=%color_red%X DISABLED%color_reset%)
-if exist "!SystemDrive!\installing\settings\automax.bat" (set AutoMaxDisplay=%color_green%√ ENABLED %color_reset%) else (set AutoMaxDisplay=%color_red%X DISABLED%color_reset%)
-if exist "!SystemDrive!\installing\settings\updategamewarning.bat" (set UpdateGameWarningDisplay=%color_red%X DISABLED%color_reset%) else (set UpdateGameWarningDisplay=%color_green%√ ENABLED %color_reset%)
-if exist "!SystemDrive!\installing\settings\warningscreen.bat" (set WarningScreenDisplay=%color_red%X DISABLED%color_reset%) else (set WarningScreenDisplay=%color_green%√ ENABLED %color_reset%)
-if exist "!SystemDrive!\installing\settings\windowsversioncheck.bat" (set WindowsVersionCheckDisplay=%color_red%X DISABLED%color_reset%) else (set WindowsVersionCheckDisplay=%color_green%√ ENABLED %color_reset%)
-if exist "!SystemDrive!\installing\settings\colorsdisabled.bat" (set ColorsDisplay=%color_red%X DISABLED%color_reset%) else (set ColorsDisplay=%color_green%√ ENABLED %color_reset%)
+if exist "%SystemDrive%\settings\autologin.bat" (set AutoLoginDisplay=%color_green%âˆš ENABLED %color_reset%) else (set AutoLoginDisplay=%color_red%X DISABLED%color_reset%)
+if exist "%SystemDrive%\settings\autosave.bat" (set AutoSaveDisplay=%color_green%âˆš ENABLED %color_reset%) else (set AutoSaveDisplay=%color_red%X DISABLED%color_reset%)
+if exist "%SystemDrive%\settings\automax.bat" (set AutoMaxDisplay=%color_green%âˆš ENABLED %color_reset%) else (set AutoMaxDisplay=%color_red%X DISABLED%color_reset%)
+if exist "%SystemDrive%\settings\updategamewarning.bat" (set UpdateGameWarningDisplay=%color_red%X DISABLED%color_reset%) else (set UpdateGameWarningDisplay=%color_green%âˆš ENABLED %color_reset%)
+if exist "%SystemDrive%\settings\warningscreen.bat" (set WarningScreenDisplay=%color_red%X DISABLED%color_reset%) else (set WarningScreenDisplay=%color_green%âˆš ENABLED %color_reset%)
+if exist "%SystemDrive%\settings\windowsversioncheck.bat" (set WindowsVersionCheckDisplay=%color_red%X DISABLED%color_reset%) else (set WindowsVersionCheckDisplay=%color_green%âˆš ENABLED %color_reset%)
+if exist "%SystemDrive%\settings\colorsdisabled.bat" (set ColorsDisplay=%color_red%X DISABLED%color_reset%) else (set ColorsDisplay=%color_green%âˆš ENABLED %color_reset%)
 goto :eof
 
 
@@ -2281,7 +2280,7 @@ if !PlayMinutes! equ 60 (
 goto :eof
 
 :AutoSaveModule
-if exist "!SystemDrive!\installing\settings\autosave.bat" (
+if exist "%SystemDrive%\settings\autosave.bat" (
     call :SaveModule
     goto :eof
 ) else (goto :eof)
@@ -2333,8 +2332,8 @@ echo set /a Sacrifice=!Sacrifice!
 echo set /a SacrificeBoost=!SacrificeBoost!
 echo set RebirthRoomKey=!RebirthRoomKey!
 echo set SacrificeRoomKey=!SacrificeRoomKey!
-)>"!SystemDrive!\installing\accounts\!loguse!\!loguse!-account-save.bat"
-call "!SystemDrive!\installing\accounts\!loguse!\!loguse!-account-save.bat"
+)>"%SystemDrive%\accounts\!loguse!\!loguse!-account-save.bat"
+call "%SystemDrive%\accounts\!loguse!\!loguse!-account-save.bat"
 goto :eof
 
 :: ============================================================================================================================
