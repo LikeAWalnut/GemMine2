@@ -70,10 +70,10 @@ echo del /Q "%cd%\license.txt"
 echo cls
 echo echo Downloading latest Gem Miner Update...
 echo echo Dont disconnect from your network^^!
-echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/FakeFizty/source/main/GemMiner2.bat -OutFile %SystemDrive%\GemMiner2\installing\GemMiner2.bat"
+echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/LikeAWalnut/GemMine2/main/GemMiner2.bat -OutFile %SystemDrive%\GemMiner2\installing\GemMiner2.bat"
 echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/LikeAWalnut/GemMine2/main/FakeFiztyStudios.bat -OutFile %SystemDrive%\GemMiner2\installing\FakeFiztyStudios.bat"
 echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/LikeAWalnut/GemMine2/main/copyright.txt -OutFile %SystemDrive%\GemMiner2\installing\copyright.txt"
-echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/LikeAWalnut/GemMine2/main/GemMiner2.bat -OutFile %SystemDrive%\GemMiner2\installing\license.txt"
+echo powershell -Command "Invoke-WebRequest https://raw.githubusercontent.com/LikeAWalnut/GemMine2/main/license.txt -OutFile %SystemDrive%\GemMiner2\installing\license.txt"
 echo move /Y "%SystemDrive%\GemMiner2\installing\GemMiner2.bat" "%cd%\GemMiner2.bat"
 echo move /Y "%SystemDrive%\GemMiner2\installing\FakeFiztyStudios.bat" "%cd%\FakeFiztyStudios.bat"
 echo move /Y "%SystemDrive%\GemMiner2\installing\copyright.txt" "%cd%\copyright.txt"
