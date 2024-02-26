@@ -24,7 +24,7 @@
 @ECHO OFF
 setlocal enabledelayedexpansion
 :setup
-set localfiles=%%\GemMiner2
+set SystemDrive=%SystemDrive%\GemMiner2
 if exist "%cd%\updater.bat" (del /Q "%cd%\updater.bat")
 if exist "%SystemDrive%\Gem Miner 2" (move /Y "%SystemDrive%\Gem Miner 2" "%appdata%\GemMiner2")
 if not exist "%SystemDrive%" (md "%SystemDrive%")
